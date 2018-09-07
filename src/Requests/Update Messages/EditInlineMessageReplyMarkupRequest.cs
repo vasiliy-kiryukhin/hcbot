@@ -29,7 +29,7 @@ namespace Telegram.Bot.Requests
         /// <param name="replyMarkup">A JSON-serialized object for an inline keyboard</param>
         public EditInlineMessageReplyMarkupRequest(
             string inlineMessageId,
-            InlineKeyboardMarkup replyMarkup = default)
+            InlineKeyboardMarkup replyMarkup = default(InlineKeyboardMarkup))
             : base("editMessageReplyMarkup")
         {
             InlineMessageId = inlineMessageId;

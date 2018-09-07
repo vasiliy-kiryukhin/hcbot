@@ -39,7 +39,7 @@ namespace Telegram.Bot.Requests
         public EditMessageReplyMarkupRequest(
             ChatId chatId,
             int messageId,
-            InlineKeyboardMarkup replyMarkup = default)
+            InlineKeyboardMarkup replyMarkup = default(InlineKeyboardMarkup))
             : base("editMessageReplyMarkup")
         {
             ChatId = chatId;

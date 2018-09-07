@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq;
+using Telegram.Bot;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HCBot
 {
@@ -27,30 +31,48 @@ namespace HCBot
             Task.Run(async () =>
             {
                 var p = new Program();
-                var me = await p.GetMe();
+                var bot = new TelegramBotClient(botKey);
+
+                var me = await bot.GetMeAsync();
+
+                bot.StartReceiving();
+                bot.OnMessage += Bot_OnMessage;
+
+               
+
                 Console.WriteLine(me.ToString());
                 Console.ReadKey();
+
+                bot.StopReceiving();
             }).Wait();
 
 
         }
 
-        public async Task<User> GetMe()
+        private static void Bot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
-            var http = new HttpClient();
-            var url = string.Concat(tgUrlBase, apiBotKey, "/getMe");
-            var r = await http.GetStringAsync(url);
-            var rr = JObject.Parse(r)["result"].ToString();
-            var me = JsonConvert.DeserializeObject<User>(rr);
-            return me;
+            if (e.Message.Entities!=null && e.Message.Entities.Count()==1)
+            {
+                var entity  = e.Message.Entities[0];
+                if (entity.Type is MessageEntityType.BotCommand)
+                {
+                    ExecuteCommand(sender as TelegramBotClient, e.Message.Chat, e.Message.Text);
+                }
+            }
+            Console.WriteLine(e.Message);
         }
 
-        public async Task<string> GetUpdates()
+        private static void ExecuteCommand(TelegramBotClient bot, Chat chat, string commandName)
         {
-            var http = new HttpClient();
-            var url = string.Concat(tgUrlBase, apiBotKey, "/getUpdates");
-            var r = await http.GetStringAsync(url);
-            return r;
+            switch (commandName)
+            {
+                case "/start":
+                    var k = new ReplyKeyboardMarkup(new KeyboardButton[] { new KeyboardButton("/one"), new KeyboardButton("/two"), new KeyboardButton("/three"), new KeyboardButton("/four")}));
+                    bot.SendTextMessageAsync(chat.Id, "Choose!", replyMarkup: k);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
