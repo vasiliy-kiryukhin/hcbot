@@ -55,10 +55,7 @@ namespace HCBot.Runner
         private void Bot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
 
-            //if (e.Message.Text.StartsWith("Иду"))
-            //{
-            //    //"Иду "+t.Location.Name+" "+t.FutureTraning.ToShortDateString()+ " "+ t.FutureTraning.ToShortTimeString()
-            //}
+            
 
             ExecuteCommand(sender as TelegramBotClient, e.Message.Chat, e.Message.Text);
            
@@ -74,12 +71,6 @@ namespace HCBot.Runner
             }
 
             new StateFactory().CreateState(user[chat.Id].UserState).ProceedState(bot, user[chat.Id], chat, commandName);
-
-        }
-
-        void ProceedEnroll()
-        {
-
         }
     }
 }

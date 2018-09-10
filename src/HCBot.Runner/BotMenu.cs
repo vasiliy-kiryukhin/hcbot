@@ -48,6 +48,10 @@ namespace HCBot.Runner
                 return new GoBackMenuCommand();
 
             var cmdPosition = currentPosition?.SubMenu?.FirstOrDefault(m => m.Text == commandName);
+
+            if (cmdPosition == null)
+                return new StartCommand();
+
             var cn = cmdPosition?.CommandName;
             
             var commandType = Type.GetType("HCBot.Runner.Commands." + cn + "Command") ?? Type.GetType("HCBot.Runner.Commands.ShowMenuCommand");
@@ -68,5 +72,8 @@ namespace HCBot.Runner
 
         [JsonProperty(propertyName: "NextMenu")]
         public BotMenuItem[] SubMenu;
+
+        [JsonProperty(propertyName: "Url")]
+        public string[] Urls;
     }
 }

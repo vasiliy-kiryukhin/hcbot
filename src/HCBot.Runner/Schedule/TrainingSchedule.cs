@@ -41,6 +41,11 @@ namespace HCBot.Runner.Schedule
 
             }
         }
+
+        public override string ToString()
+        {
+            return Location.Name + " " + FutureTraning.ToShortDateString() + " " + FutureTraning.ToShortTimeString();
+        }
     }
 
     public class TrainingSchedule

@@ -23,7 +23,7 @@ namespace HCBot.Runner.Commands
             
             IEnumerable<IEnumerable<KeyboardButton>> btns =
                 schedule.Trainigs.FindAll(t=>t.TrainingType == TrainingType.Amateur).OrderBy(t => t.FutureTraning)
-                .Select(t => new KeyboardButton("Иду "+t.Location.Name+" "+t.FutureTraning.ToShortDateString()+ " "+ t.FutureTraning.ToShortTimeString()))
+                .Select(t => new KeyboardButton(t.Location.Name+" "+t.FutureTraning.ToShortDateString()+ " "+ t.FutureTraning.ToShortTimeString()))
                 .Union(back)
                 .Select(b => new List<KeyboardButton>() { b });
 

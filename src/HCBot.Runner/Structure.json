@@ -8,98 +8,58 @@
 				"Text": "Тренировки для взрослых",
 				"NextMenu":[
           {
-            "Text": "Записаться/отписаться",
+            "Text": "Записаться/Отменить запись",
             "Command": "EnrollAmateur"
           },
-					{
-						"Text": "Акулы",
-						"NextMenu":[
-              {
-                "Text": "Узнать подробнее",
-                "Command": "ShowUrl",
-                "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-ponedelnik/",] 
-              },
-							{
-								"Text": "Записаться"
-							}	
-						]
-					},
-					{
-						"Text": "Янтарь",
-						"NextMenu":[
-							{
-								"Text": "Узнать подробнее"
-							},
-							{
-								"Text": "Записаться"
-							}
-						]							
-					},
-					{
-						"Text": "Замоскворечье",
-						"NextMenu":[
-							{
-								"Text": "Узнать подробнее"
-							},
-							{
-								"Text": "Записаться"
-							}
-						]							
-					}
+          {
+            "Text": "ЛД Акулы. Узнать подробнее",
+            "Command": "ShowUrl",
+            "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-ponedelnik/", "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-pyatnitsa/" ]         
+          },
+          {
+            "Text": "ЛД Янтарь. Узнать подробнее",
+            "Command": "ShowUrl",
+            "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-yantar-sreda/" ]
+
+          },
+          {
+            "Text": "ЛТЦ Москворечье. Узнать подробнее",
+            "Command": "ShowUrl",
+            "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-ponedelnik/" ]
+          }
 				]
 			},
-			{
-				"Text": "Тренировки для детей",
-				"NextMenu":[
-				{
-					"Text": "Записаться"	
-				},
-				{
-					"Text": "Филиал 1",
-					"NextMenu":[
-						{
-							"Text": "Узнать подробнее"
-						},
-						{
-							"Text": "Записаться"
-						}
-					]
-				},
-				{
-					"Text": "УТЦ",
-					"NextMenu":[
-						{
-							"Text": "Узнать подробнее"
-						},
-						{
-							"Text": "Записаться"
-						}
-					]
-				},
-				{
-					"Text": "ТЦ СТОР",
-					"NextMenu":[
-						{
-							"Text": "Узнать подробнее"
-						},
-						{
-							"Text": "Записаться"
-						}
-					]
-				},
-				{
-					"Text": "Ч",
-					"NextMenu":[
-						{
-							"Text": "Узнать подробнее"
-						},
-						{
-							"Text": "Записаться"
-						}
-					]
-				}	
-				]				
-			}
+      {
+        "Text": "Тренировки для детей",
+        "NextMenu": [
+          {
+            "Text": "Записаться/Отменить запись",
+            "Command": "EnrollYouth"
+          },
+          {
+            "Text": "Филиал 1",
+            "Command": "ShowUrl",
+            "Url": [ "http://hockeychance.ru/detyam/" ]
+          },
+          {
+            "Text": "УТЦ",
+            "Command": "ShowUrl",
+            "Url": [ "http://hockeychance.ru/detyam/" ]
+
+          },
+          {
+            "Text": "ТЦ СТОР",
+            "Command": "ShowUrl",
+            "Url": [ "http://hockeychance.ru/detyam/" ]
+
+          },
+          {
+            "Text": "Ч",
+            "Command": "ShowUrl",
+            "Url": [ "http://hockeychance.ru/detyam/" ]
+          }
+        ]
+      }
 		]
 	}
 	]

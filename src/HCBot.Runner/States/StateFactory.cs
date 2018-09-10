@@ -11,7 +11,7 @@ namespace HCBot.Runner.States
             if (state == UserBotState.SerfMenu)
                 return new SerfMenuState();
             if (state == UserBotState.Enroll)
-                return null;
+                return new EnrollTrainigState();
 
             throw new NotImplementedException();
         }

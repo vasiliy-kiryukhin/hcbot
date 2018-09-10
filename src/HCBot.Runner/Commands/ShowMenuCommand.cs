@@ -29,13 +29,9 @@ namespace HCBot.Runner.Commands
                 menu.currentPosition = Position;
                 returnKeyboardMenu.Keyboard = btns;
 
-                bot.SendTextMessageAsync(chat.Id, "Choose!", replyMarkup: returnKeyboardMenu);
+                bot.SendTextMessageAsync(chat.Id, "Выберите", replyMarkup: returnKeyboardMenu);
             }
-            //var zipped = menu.currentPosition.SubMenu.Zip(
-            //    Enumerable.Range(1, menu.currentPosition.SubMenu.Count()),
-            //    (m, c) => "/" + c.ToString() + " - " + m.Text + Environment.NewLine);
-            //var message = zipped.Aggregate((acc, m) => acc + m);
-            //bot.SendTextMessageAsync(chat.Id, message);
+            user.UserState = UserBotState.SerfMenu;
         }
     }
 }
