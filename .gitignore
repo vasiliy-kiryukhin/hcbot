@@ -1,3 +1,6 @@
 /out
 /src/obj
 /.vs
+/src/HCBot.Api/obj
+/src/HCBot.Runner/obj
+/src/HCBot.Test/obj
