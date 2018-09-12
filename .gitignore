@@ -4,3 +4,8 @@
 /src/HCBot.Api/obj
 /src/HCBot.Runner/obj
 /src/HCBot.Test/obj
+/src/HCBot.Api/bin
+/src/HCBot.Runner/bin
+/src/HCBot.Test/bin
+
+*.user
