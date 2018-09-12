@@ -1,7 +1,9 @@
 using HCBot.Runner;
 using HCBot.Runner.Menu;
 using HCBot.Runner.Schedule;
+using HCBot.Runner.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace HCBot.Test
 {
@@ -35,6 +37,14 @@ namespace HCBot.Test
 
 
             Assert.AreEqual<string>("Тренировки для детей", prev.Text);
+        }
+
+        [TestMethod]
+        public void TestGetMskToday()
+        {
+            var utc = DateTime.UtcNow;
+            var msk = DateTimeHelper.UtcToMsk(utc);
+            Assert.AreEqual(3, msk.Subtract(utc).Hours);
         }
     }
 }

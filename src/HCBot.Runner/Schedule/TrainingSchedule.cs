@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HCBot.Runner.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,16 +27,16 @@ namespace HCBot.Runner.Schedule
         public DayOfWeek TrainingDayOfWeek { get; set; }
 
         public DateTime FutureTraning { get
-            {
-                var today = DateTime.Today.DayOfWeek;
+            {                
+                var today = DateTimeHelper.MoscowNow.Date.DayOfWeek;
                 if (today <= TrainingDayOfWeek) {                    
                     //Start on week
-                    var thisWeek = DateTime.Now.Date.AddDays(-1*(int)DateTime.Now.DayOfWeek);              
+                    var thisWeek = DateTimeHelper.MoscowNow.Date.AddDays(-1*(int)DateTimeHelper.MoscowNow.DayOfWeek);              
                     return thisWeek.AddDays((int)TrainingDayOfWeek).Add(TimeFrom);
                 }else
                 {
                     //Start on next week 
-                    var nextWeek = DateTime.Now.Date.AddDays(-1 * (int)DateTime.Now.DayOfWeek).AddDays(7);
+                    var nextWeek = DateTimeHelper.MoscowNow.Date.AddDays(-1 * (int)DateTimeHelper.MoscowNow.DayOfWeek).AddDays(7);
                     return nextWeek.AddDays((int)TrainingDayOfWeek).Add(TimeFrom);
                 }
 

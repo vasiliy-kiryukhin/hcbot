@@ -1,4 +1,5 @@
-﻿using HCBot.Runner.Menu;
+﻿using HCBot.Runner.Data;
+using HCBot.Runner.Menu;
 using HCBot.Runner.Schedule;
 using HCBot.Runner.States;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +40,7 @@ namespace HCBot.Runner
             }
             else
             {
-                path = args[1];
+                path = args[0];
             }
             
             Task.Run(() => 
@@ -47,9 +48,7 @@ namespace HCBot.Runner
                 var p = new Program();
                 p.Run(path);
 
-            }).Wait();
-            
-
+            }).Wait();           
         }
 
         void Run(string datadir)
@@ -65,7 +64,9 @@ namespace HCBot.Runner
             serviceCollection.AddSingleton<ILogger>(logger);
             serviceCollection.AddScoped<IMenuProvider>( sp => new FlatFileMenuProvider(datadir));
             serviceCollection.AddScoped<ITrainingScheduleProvider>(sp => new FlatFileTrainingScheduleProvider(datadir));
-            Services = serviceCollection.BuildServiceProvider();
+            serviceCollection.AddScoped<IEnrollRepository>(sp => new EnrollRepository(datadir));
+
+           Services = serviceCollection.BuildServiceProvider();
 
             logger.LogInformation("HCbot started");
 
