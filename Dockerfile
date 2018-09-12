@@ -2,4 +2,5 @@
 FROM microsoft/aspnetcore
 WORKDIR /app
 COPY . .
-CMD ./HCBot.Runner
+VOLUME /usr/local/hcbot-data
+CMD ./HCBot.Runner /usr/local/hcbot-data

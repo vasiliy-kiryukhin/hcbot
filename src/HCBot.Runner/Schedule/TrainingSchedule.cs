@@ -51,21 +51,7 @@ namespace HCBot.Runner.Schedule
     public class TrainingSchedule
     {
         public List<Training> Trainigs = new List<Training>();
-        public static TrainingSchedule LoadFromFile(string path)
-        {
-            var schedule = new TrainingSchedule();
-            var scheduleCsv = File.ReadAllLines(path);
-            schedule.Trainigs.AddRange(
-            scheduleCsv.Select(l => new Training
-            {
-                TrainingDayOfWeek = GetDayOfWeek(l.Split(',')[0]),
-                Location = new TrainingLocation { Name = l.Split(',')[1] },
-                TrainingType = GetTrainingType(l.Split(',')[2]),
-                TimeFrom = GetFrom(l.Split(',')[3]),
-                TimeTo = GetTo(l.Split(',')[3])
-            }).ToList());
-            return schedule;
-        }
+       
         public static TimeSpan GetFrom(string timeString)
         {
             return new TimeSpan(int.Parse(timeString.Split('-')[0].Split(':')[0]), int.Parse(timeString.Split('-')[0].Split(':')[1]), 0);

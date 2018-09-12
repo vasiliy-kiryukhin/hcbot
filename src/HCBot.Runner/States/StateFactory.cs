@@ -1,17 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace HCBot.Runner.States
 {
     public class StateFactory
     {
+        IServiceProvider serviceProvider;
+        public StateFactory(IServiceProvider sp)
+        {
+            serviceProvider = sp;
+        }
         public UserState CreateState(UserBotState state)
         {
             if (state == UserBotState.SerfMenu)
-                return new SerfMenuState();
+                return new SerfMenuState(serviceProvider);
             if (state == UserBotState.Enroll)
-                return new EnrollTrainigState();
+                return new EnrollTrainigState(serviceProvider);
 
             throw new NotImplementedException();
         }

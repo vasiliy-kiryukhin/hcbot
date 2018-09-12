@@ -4,9 +4,8 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace HCBot.Runner
+namespace HCBot.Runner.Menu
 {
-
     public class BotMenu
     {
         public BotMenuItem currentPosition;
@@ -32,16 +31,7 @@ namespace HCBot.Runner
             }
             return null;
         }
-
-        public static BotMenu LoadFromFile(string path)
-        {
-            var menu = new BotMenu();
-            string menuJson = File.ReadAllText(path);
-            var items = JsonConvert.DeserializeObject<BotMenuItem>(menuJson);
-            menu.root = menu.currentPosition = items;
-            return menu;
-        }
-
+       
         public ICommand GetCommand(string commandName)
         {
             if (commandName == "Вернуться")

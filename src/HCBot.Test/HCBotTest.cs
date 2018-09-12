@@ -1,4 +1,6 @@
 using HCBot.Runner;
+using HCBot.Runner.Menu;
+using HCBot.Runner.Schedule;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HCBot.Test
@@ -9,14 +11,14 @@ namespace HCBot.Test
         [TestMethod]
         public void LoadMenuTest()
         {
-            var currentMenu = BotMenu.LoadFromFile("Structure.json");
-            Assert.IsNotNull(currentMenu);
+            var menu = new FlatFileMenuProvider("Structure.json").Load();
+            Assert.IsNotNull(menu);
         }
 
         [TestMethod]
         public void MenuBackNavigation1Test()
         {
-            var menu = BotMenu.LoadFromFile("Structure.json");
+            var menu = new FlatFileMenuProvider("Structure.json").Load();
             menu.currentPosition = menu.root.SubMenu[0].SubMenu[1]; //Тренировки для детей
             var prev = menu.GetPrevPosition();
 
@@ -27,7 +29,7 @@ namespace HCBot.Test
         [TestMethod]
         public void MenuBackNavigation2Test()
         {
-            var menu = BotMenu.LoadFromFile("Structure.json");
+            var menu = new FlatFileMenuProvider("Structure.json").Load();
             menu.currentPosition = menu.root.SubMenu[0].SubMenu[1].SubMenu[1]; //Филиал 1
             var prev = menu.GetPrevPosition();
 

@@ -1,8 +1,8 @@
-﻿using HCBot.Runner.Schedule;
+﻿using HCBot.Runner.Menu;
+using HCBot.Runner.Schedule;
 using HCBot.Runner.States;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using Microsoft.Extensions.Logging.Debug;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HCBot.Runner
 {
@@ -28,29 +26,46 @@ namespace HCBot.Runner
         public const string apiBotKey = "bot" + botKey;
         private Dictionary<long, UserStateBag> user = new Dictionary<long, UserStateBag>();
         public ManualResetEvent botHaltEvent = new ManualResetEvent(false);
-
+        IServiceProvider Services { get; set; }
+        IServiceCollection serviceCollection;
         ILogger logger;
 
         static void Main(string[] args)
         {
-
-            Task.Run(() =>
+            string path;
+            if (args.Count()!=1)
+            {
+                path = string.Empty;
+            }
+            else
+            {
+                path = args[1];
+            }
+            
+            Task.Run(() => 
             {
                 var p = new Program();
-                p.Run();
+                p.Run(path);
 
             }).Wait();
             
 
         }
 
-        void Run()
+        void Run(string datadir)
         {
+            serviceCollection = new ServiceCollection();
+            
             ILoggerFactory loggerFactory =
                 new LoggerFactory()
                     .AddConsole()
                     .AddDebug();
             logger = loggerFactory.CreateLogger<Program>();
+
+            serviceCollection.AddSingleton<ILogger>(logger);
+            serviceCollection.AddScoped<IMenuProvider>( sp => new FlatFileMenuProvider(datadir));
+            serviceCollection.AddScoped<ITrainingScheduleProvider>(sp => new FlatFileTrainingScheduleProvider(datadir));
+            Services = serviceCollection.BuildServiceProvider();
 
             logger.LogInformation("HCbot started");
 
@@ -91,10 +106,11 @@ namespace HCBot.Runner
             }
             if (!user.ContainsKey(chat.Id))
             {
-                user.Add(chat.Id, new UserStateBag { UserState = UserBotState.SerfMenu, BotMenu = BotMenu.LoadFromFile("Structure.json") });
+                var menu = Services.GetRequiredService<IMenuProvider>().Load();
+                user.Add(chat.Id, new UserStateBag { UserState = UserBotState.SerfMenu, BotMenu = menu });
             }
 
-            new StateFactory().CreateState(user[chat.Id].UserState).ProceedState(bot, user[chat.Id], chat, commandName);
+            new StateFactory(Services).CreateState(user[chat.Id].UserState).ProceedState(bot, user[chat.Id], chat, commandName);
         }
     }
 }
