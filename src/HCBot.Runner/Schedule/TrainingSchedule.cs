@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HCBot.Runner.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,16 +27,16 @@ namespace HCBot.Runner.Schedule
         public DayOfWeek TrainingDayOfWeek { get; set; }
 
         public DateTime FutureTraning { get
-            {
-                var today = DateTime.Today.DayOfWeek;
+            {                
+                var today = DateTimeHelper.MoscowNow.Date.DayOfWeek;
                 if (today <= TrainingDayOfWeek) {                    
                     //Start on week
-                    var thisWeek = DateTime.Now.Date.AddDays(-1*(int)DateTime.Now.DayOfWeek);              
+                    var thisWeek = DateTimeHelper.MoscowNow.Date.AddDays(-1*(int)DateTimeHelper.MoscowNow.DayOfWeek);              
                     return thisWeek.AddDays((int)TrainingDayOfWeek).Add(TimeFrom);
                 }else
                 {
                     //Start on next week 
-                    var nextWeek = DateTime.Now.Date.AddDays(-1 * (int)DateTime.Now.DayOfWeek).AddDays(7);
+                    var nextWeek = DateTimeHelper.MoscowNow.Date.AddDays(-1 * (int)DateTimeHelper.MoscowNow.DayOfWeek).AddDays(7);
                     return nextWeek.AddDays((int)TrainingDayOfWeek).Add(TimeFrom);
                 }
 
@@ -51,21 +52,7 @@ namespace HCBot.Runner.Schedule
     public class TrainingSchedule
     {
         public List<Training> Trainigs = new List<Training>();
-        public static TrainingSchedule LoadFromFile(string path)
-        {
-            var schedule = new TrainingSchedule();
-            var scheduleCsv = File.ReadAllLines(path);
-            schedule.Trainigs.AddRange(
-            scheduleCsv.Select(l => new Training
-            {
-                TrainingDayOfWeek = GetDayOfWeek(l.Split(',')[0]),
-                Location = new TrainingLocation { Name = l.Split(',')[1] },
-                TrainingType = GetTrainingType(l.Split(',')[2]),
-                TimeFrom = GetFrom(l.Split(',')[3]),
-                TimeTo = GetTo(l.Split(',')[3])
-            }).ToList());
-            return schedule;
-        }
+       
         public static TimeSpan GetFrom(string timeString)
         {
             return new TimeSpan(int.Parse(timeString.Split('-')[0].Split(':')[0]), int.Parse(timeString.Split('-')[0].Split(':')[1]), 0);

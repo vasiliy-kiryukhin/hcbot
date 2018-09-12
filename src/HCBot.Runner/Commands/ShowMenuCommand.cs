@@ -6,12 +6,12 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using System.Linq;
 using HCBot.Runner.States;
+using HCBot.Runner.Menu;
 
 namespace HCBot.Runner.Commands
 {
-    public class ShowMenuCommand : ICommand
+    public class ShowMenuCommand : CommandBase, ICommand
     {
-        public BotMenuItem Position { get; set ; }
         public bool AllowBackward { get; set; } = true;
         public void ExecuteCommand(ITelegramBotClient bot, Chat chat, UserStateBag user)
         {
@@ -29,7 +29,7 @@ namespace HCBot.Runner.Commands
                 menu.currentPosition = Position;
                 returnKeyboardMenu.Keyboard = btns;
 
-                bot.SendTextMessageAsync(chat.Id, "Выберите", replyMarkup: returnKeyboardMenu);
+                bot.SendTextMessageAsync(chat.Id, "Выберите пункт меню", replyMarkup: returnKeyboardMenu);
             }
             user.UserState = UserBotState.SerfMenu;
         }

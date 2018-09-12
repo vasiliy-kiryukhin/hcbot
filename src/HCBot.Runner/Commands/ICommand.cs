@@ -1,4 +1,5 @@
-﻿using HCBot.Runner.States;
+﻿using HCBot.Runner.Menu;
+using HCBot.Runner.States;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,7 @@ namespace HCBot.Runner.Commands
     public interface ICommand
     {
         BotMenuItem Position { get; set;  }
+        IServiceProvider ServiceProvider { get; set; }
         void ExecuteCommand(ITelegramBotClient bot, Chat chat, UserStateBag user);
     }
 }

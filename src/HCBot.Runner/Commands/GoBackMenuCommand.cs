@@ -1,4 +1,5 @@
-﻿using HCBot.Runner.States;
+﻿using HCBot.Runner.Menu;
+using HCBot.Runner.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,8 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace HCBot.Runner.Commands
 {
-    public class GoBackMenuCommand : ICommand
-    {
-        public BotMenuItem Position { get; set; }
-
+    public class GoBackMenuCommand : CommandBase, ICommand
+    { 
         public void ExecuteCommand(ITelegramBotClient bot, Chat chat, UserStateBag user)
         {
             var menu = user.BotMenu;
