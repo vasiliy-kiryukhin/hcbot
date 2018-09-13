@@ -64,7 +64,7 @@ namespace HCBot.Runner
             serviceCollection.AddSingleton<ILogger>(logger);
             serviceCollection.AddScoped<IMenuProvider>( sp => new FlatFileMenuProvider(datadir));
             serviceCollection.AddScoped<ITrainingScheduleProvider>(sp => new FlatFileTrainingScheduleProvider(datadir));
-            serviceCollection.AddScoped<IEnrollRepository>(sp => new EnrollRepository(datadir));
+            serviceCollection.AddScoped<IEnrollRepository>(sp => new EnrollFlatFileRepository(datadir));
 
            Services = serviceCollection.BuildServiceProvider();
 
