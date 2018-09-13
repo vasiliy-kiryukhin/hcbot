@@ -26,7 +26,7 @@ namespace HCBot.Runner.States
             }
 
             var entries = commandName.Split(" ");
-            //Янтарь 9/12/18 10:00 PM
+
             if (entries?.Count()==3)           
             {
                 var location = entries[0];
@@ -40,12 +40,16 @@ namespace HCBot.Runner.States
                 {
                    
                     var repo = ServiceProvider.GetRequiredService<IEnrollRepository>();
-                    var uid = !string.IsNullOrEmpty(chat.Username) ? chat.Username : 
-                                (!string.IsNullOrEmpty(chat.FirstName) ? string.Concat(chat.FirstName," ",chat.LastName) : chat.Id.ToString());
-                    repo.SaveEnrollment(chat.Id.ToString(), training.FutureTraning, training.TrainingType, training.Location.Name, uid, true);
+                    var displayName = !string.IsNullOrEmpty(chat.Username) ? chat.Username : 
+                                (!string.IsNullOrEmpty(chat.FirstName) ? string.Concat(chat.FirstName," ",chat.LastName) : user.Uid.ToString());
+
+                    var alreadyEnrolled = repo.IsEnrolled(user.Uid.ToString(), training.FutureTraning, training.TrainingType, training.Location.Name);
+                    repo.SaveEnrollment(user.Uid.ToString(), training.FutureTraning, training.TrainingType, training.Location.Name, displayName, alreadyEnrolled);
+
                     var list = repo.LoadEnrollList(training.FutureTraning, training.TrainingType, training.Location.Name);
-                    
-                    bot.SendTextMessageAsync(chat.Id, "Вы записаны на тренировку " + training.ToString() + Environment.NewLine+ string.Join(Environment.NewLine, list));
+
+                    var msg = !alreadyEnrolled ? "Вы записаны на тренировку " : "Вы отменили запись на тренировку ";
+                    bot.SendTextMessageAsync(chat.Id, msg + training.ToString() + Environment.NewLine+ string.Join(Environment.NewLine, list));
                 }
                 else
                 {

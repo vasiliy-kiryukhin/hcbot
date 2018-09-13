@@ -46,5 +46,10 @@ namespace HCBot.Runner.Data
             return new List<string>();
 
         }
+
+        public bool IsEnrolled(string uid, DateTime date, TrainingType trainingType, string location)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

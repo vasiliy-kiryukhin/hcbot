@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -64,8 +65,8 @@ namespace HCBot.Runner
             serviceCollection.AddSingleton<ILogger>(logger);
             serviceCollection.AddScoped<IMenuProvider>( sp => new FlatFileMenuProvider(datadir));
             serviceCollection.AddScoped<ITrainingScheduleProvider>(sp => new FlatFileTrainingScheduleProvider(datadir));
-            serviceCollection.AddScoped<IEnrollRepository>(sp => new EnrollFlatFileRepository(datadir));
-
+            //serviceCollection.AddScoped<IEnrollRepository>(sp => new EnrollFlatFileRepository(datadir));
+            serviceCollection.AddScoped<IEnrollRepository>(sp => new EnrollPgSqlRepository());
            Services = serviceCollection.BuildServiceProvider();
 
             logger.LogInformation("HCbot started");
@@ -94,24 +95,25 @@ namespace HCBot.Runner
         private void Bot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
             logger.LogInformation($"Message received from {e.Message.Chat.Id} : {e.Message.Text}");
-            ExecuteCommand(sender as TelegramBotClient, e.Message.Chat, e.Message.Text);            
+            ExecuteCommand(sender as TelegramBotClient, e.Message.From, e.Message.Chat, e.Message.Text);            
         }
 
-        private void ExecuteCommand(ITelegramBotClient bot, Chat chat, string commandName)
+        private void ExecuteCommand(ITelegramBotClient bot, User from, Chat chat, string commandName)
         {
+            var uid = from?.Id ?? chat?.Id;
             if (commandName=="halt")
             {
                 logger.LogInformation($"Setting halt event");
                 botHaltEvent.Set();
                 return;
             }
-            if (!user.ContainsKey(chat.Id))
+            if (!user.ContainsKey(uid.Value))
             {
                 var menu = Services.GetRequiredService<IMenuProvider>().Load();
-                user.Add(chat.Id, new UserStateBag { UserState = UserBotState.SerfMenu, BotMenu = menu });
+                user.Add(uid.Value, new UserStateBag { Uid=uid.Value, UserState = UserBotState.SerfMenu, BotMenu = menu });
             }
 
-            new StateFactory(Services).CreateState(user[chat.Id].UserState).ProceedState(bot, user[chat.Id], chat, commandName);
+            new StateFactory(Services).CreateState(user[uid.Value].UserState).ProceedState(bot, user[chat.Id], chat, commandName);
         }
     }
 }

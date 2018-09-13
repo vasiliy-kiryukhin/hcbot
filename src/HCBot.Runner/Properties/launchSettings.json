@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "HCBot.Runner": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DATABASE_URL": "postgres://fgnspgwqjrwemx:78738eabb44cfda3f74d09f8cde237b0d34c68cef615ad8afcf2ae4d416c9400@ec2-54-227-243-210.compute-1.amazonaws.com:5432/d5mu209f47ei1h"
+      }
+    }
+  }
+}

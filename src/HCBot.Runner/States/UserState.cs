@@ -9,7 +9,7 @@ namespace HCBot.Runner.States
 {
     public enum UserBotState
     {
-        SerfMenu, Enroll
+        SerfMenu, Enroll, ShowEnroll
     }
 
     public abstract class UserState

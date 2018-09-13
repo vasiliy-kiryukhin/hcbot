@@ -17,6 +17,8 @@ namespace HCBot.Runner.States
                 return new SerfMenuState(serviceProvider);
             if (state == UserBotState.Enroll)
                 return new EnrollTrainigState(serviceProvider);
+            if (state == UserBotState.ShowEnroll)
+                return new ShowEnrollState(serviceProvider);
 
             throw new NotImplementedException();
         }

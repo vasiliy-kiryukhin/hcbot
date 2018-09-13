@@ -9,5 +9,6 @@ namespace HCBot.Runner.Data
     {
         IEnumerable<string> LoadEnrollList(DateTime date, TrainingType trainingType, string location);
         void SaveEnrollment(string uid, DateTime date, TrainingType trainingType, string location, string displayName, bool positive);
+        bool IsEnrolled(string uid, DateTime date, TrainingType trainingType, string location);
     }
 }

@@ -1,11 +1,11 @@
 ﻿create table enrollment (
-	chatid bigint,
-	enroll_date date,
-	trainingType smallint,
+	userid text,
+	enroll_date timestamp,
+	trainingType integer,
 	location text,
 	displayName text,
 	positive boolean,
-	unique(chatid, enroll_date, location)
+	rectimestamp timestamp
 );
 
 create table person (

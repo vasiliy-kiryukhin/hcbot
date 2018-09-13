@@ -6,28 +6,37 @@
 		"NextMenu":[
 			{
 				"Text": "Тренировки для взрослых",
-				"NextMenu":[
+        "NextMenu": [
           {
             "Text": "Записаться/Отменить запись",
             "Command": "EnrollAmateur"
           },
           {
-            "Text": "ЛД Акулы. Узнать подробнее",
-            "Command": "ShowUrl",
-            "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-ponedelnik/", "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-pyatnitsa/" ]         
+            "Text": "Посмотреть запись",
+            "Command": "ShowEnrollAmateur"
           },
           {
-            "Text": "ЛД Янтарь. Узнать подробнее",
-            "Command": "ShowUrl",
-            "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-yantar-sreda/" ]
+            "Text": "Информация о тренировках",
+            "NextMenu": [
+              {
+                "Text": "ЛД Акулы. Узнать подробнее",
+                "Command": "ShowUrl",
+                "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-ponedelnik/", "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-pyatnitsa/" ]
+              },
+              {
+                "Text": "ЛД Янтарь. Узнать подробнее",
+                "Command": "ShowUrl",
+                "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-yantar-sreda/" ]
 
-          },
-          {
-            "Text": "ЛТЦ Москворечье. Узнать подробнее",
-            "Command": "ShowUrl",
-            "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-ponedelnik/" ]
+              },
+              {
+                "Text": "ЛТЦ Москворечье. Узнать подробнее",
+                "Command": "ShowUrl",
+                "Url": [ "http://hockeychance.ru/vzroslyim/trenirovki-v-sk-serebryanyie-akulyi-ponedelnik/" ]
+              }
+            ]
           }
-				]
+        ]
 			},
       {
         "Text": "Тренировки для детей",
